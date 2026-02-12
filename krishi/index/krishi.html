@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrishiSahay - AI Powered Farming Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            min-height: 100vh;
+            padding: 24px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 64px 24px;
+            animation: slideDown 0.6s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            font-weight: bold;
+            color: #166534;
+            margin-bottom: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #374151;
+            max-width: 640px;
+            margin: 16px auto;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 32px;
+            font-size: 16px;
+            border-radius: 9999px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: #15803d;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:hover {
+            background-color: #166534;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: #15803d;
+            border: 2px solid #15803d;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f0fdf4;
+            transform: translateY(-2px);
+        }
+        
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 40px 0;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+        
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        
+        .card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 12px;
+        }
+        
+        .card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        /* Query Section */
+        .query-section {
+            margin: 40px 0;
+        }
+        
+        .query-section h2 {
+            font-size: 32px;
+            font-weight: bold;
+            color: #166534;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #d1fae5;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #15803d;
+            box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.1);
+        }
+        
+        /* Response Section */
+        .response-box {
+            background: white;
+            border-left: 4px solid #15803d;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            min-height: 100px;
+            display: none;
+        }
+        
+        .response-box.show {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .response-box p {
+            color: #374151;
+            line-height: 1.8;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 24px;
+            color: #6b7280;
+            margin-top: 40px;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-left: 8px;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>🌾 KrishiSahay – AI Powered Farming Assistant</h1>
+            <p>Get instant AI-based solutions for crop diseases, farming techniques, and agricultural queries using voice, text, or image.</p>
+            <div class="button-group">
+                <button class="btn-primary">Get Started</button>
+                <button class="btn-secondary">Learn More</button>
+            </div>
+        </section>
+
+        <!-- Query Section -->
+        <section class="query-section card" style="margin: 40px auto; max-width: 600px;">
+            <h2 style="margin-bottom: 24px;">Ask Your Question</h2>
+            <div class="input-group">
+                <input type="text" id="queryInput" placeholder="Type your farming question..." />
+                <button class="btn-primary" onclick="askQuestion()">Ask AI</button>
+            </div>
+            <div class="response-box" id="responseBox">
+                <p id="responseText"></p>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="query-section">
+            <h2>Why Choose KrishiSahay?</h2>
+            <div class="features-grid">
+                <div class="card">
+                    <div class="card-icon">🌍</div>
+                    <h3>Multilingual AI</h3>
+                    <p>Supports regional languages for better farmer accessibility.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Real-time Guidance</h3>
+                    <p>Instant AI-powered recommendations and solutions.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📈</div>
+                    <h3>Increase Yield</h3>
+                    <p>Reduce crop loss and improve productivity sustainably.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Features -->
+        <section class="query-section">
+            <div class="features-grid">
+                <div class="card">
+                    <div class="card-icon">🎤</div>
+                    <h3>Voice Support</h3>
+                    <p>Speak in your local language to get AI assistance.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📸</div>
+                    <h3>Upload Crop Image</h3>
+                    <p>Detect diseases and get treatment suggestions.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💡</div>
+                    <h3>Expert Tips</h3>
+                    <p>Get personalized farming techniques and best practices.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            © 2026 KrishiSahay | AI for Sustainable Agriculture 🌱
+        </footer>
+    </div>
+
+    <script>
+        function askQuestion() {
+            const queryInput = document.getElementById('queryInput');
+            const responseBox = document.getElementById('responseBox');
+            const responseText = document.getElementById('responseText');
+            const query = queryInput.value.trim();
+            
+            if (!query) {
+                alert('Please enter a question');
+                return;
+            }
+            
+            responseBox.classList.remove('show');
+            responseText.innerHTML = 'Loading<span class="loading"></span>';
+            responseBox.classList.add('show');
+            
+            // Send to backend API
+            fetch('/api/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ question: query })
+            })
+            .then(response => response.json())
+            .then(data => {
+                responseText.innerHTML = data.answer || 'Unable to get response';
+            })
+            .catch(error => {
+                responseText.innerHTML = 'Error: ' + error.message;
+            });
+        }
+        
+        // Allow Enter key to submit
+        document.getElementById('queryInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                askQuestion();
+            }
+        });
+    </script>
+</body>
+</html>
